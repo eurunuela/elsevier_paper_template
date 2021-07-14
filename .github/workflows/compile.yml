@@ -39,7 +39,7 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           push-branch: 'master'
-          commit-message: 'publish built pdf to master [skip ci]'
+          commit-message: 'GitHub Action: Compile PDF'
           force-add: 'true'
           files: main.pdf
           name: Eneko Uruñuela
