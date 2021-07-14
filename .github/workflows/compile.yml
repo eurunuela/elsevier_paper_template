@@ -8,16 +8,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@main
         with:
           ref: master
-      - name: Run pdflatex prebiber on main
+      - name: Run pdflatex previous to bibtex on main
         uses: dante-ev/latex-action@latest
         with:
           root_file: main.tex
           compiler: pdflatex
           args: -interaction=nonstopmode -shell-escape
-      - name: Run biber
+      - name: Run bibtex
         uses: dante-ev/latex-action@latest
         with:
           root_file: main.bcf
@@ -34,7 +34,7 @@ jobs:
         with:
           name: Compiled_file
           path: main.pdf
-      - name: Push on master branch
+      - name: Push on main branch
         uses: github-actions-x/commit@v2.8
         with:
           github-token: ${{ secrets.GH_TOKEN }}
