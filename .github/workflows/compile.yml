@@ -22,7 +22,6 @@ jobs:
         with:
           root_file: main.bcf
           compiler: bibtex
-          args: -interaction=nonstopmode -shell-escape
       - name: Run pdflatex on master
         uses: dante-ev/latex-action@latest
         with:
