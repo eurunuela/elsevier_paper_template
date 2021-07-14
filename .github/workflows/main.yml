@@ -1,0 +1,46 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+        with:
+          ref: master
+      - name: Run pdflatex prebiber on main
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: main.tex
+          compiler: pdflatex
+          args: -interaction=nonstopmode -shell-escape
+      - name: Run biber
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: main.bcf
+          compiler: bibtex
+          args: -interaction=nonstopmode -shell-escape
+      - name: Run pdflatex on main
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: main.tex
+          compiler: pdflatex
+          args: -interaction=nonstopmode -shell-escape
+      - name: Upload pdf to workflow
+        uses: actions/upload-artifact@v2
+        with:
+          name: Compiled_file
+          path: main.pdf
+      - name: Push on master branch
+        uses: github-actions-x/commit@v2.8
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          push-branch: 'main'
+          commit-message: 'publish built pdf to master [skip ci]'
+          force-add: 'true'
+          files: main.pdf
+          name: Eneko Uruñuela
+          email: e.urunuela@bcbl.eu
