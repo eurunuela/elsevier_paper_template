@@ -2,16 +2,16 @@ name: Build
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   build_and_publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@main
+        uses: actions/checkout@master
         with:
           ref: master
-      - name: Run pdflatex previous to bibtex on main
+      - name: Run pdflatex previous to bibtex on master
         uses: dante-ev/latex-action@latest
         with:
           root_file: main.tex
@@ -23,7 +23,7 @@ jobs:
           root_file: main.bcf
           compiler: bibtex
           args: -interaction=nonstopmode -shell-escape
-      - name: Run pdflatex on main
+      - name: Run pdflatex on master
         uses: dante-ev/latex-action@latest
         with:
           root_file: main.tex
@@ -34,11 +34,11 @@ jobs:
         with:
           name: Compiled_file
           path: main.pdf
-      - name: Push on main branch
+      - name: Push on master branch
         uses: github-actions-x/commit@v2.8
         with:
           github-token: ${{ secrets.GH_TOKEN }}
-          push-branch: 'main'
+          push-branch: 'master'
           commit-message: 'publish built pdf to master [skip ci]'
           force-add: 'true'
           files: main.pdf
