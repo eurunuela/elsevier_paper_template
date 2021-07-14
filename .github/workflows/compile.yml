@@ -20,8 +20,9 @@ jobs:
       - name: Run bibtex
         uses: dante-ev/latex-action@latest
         with:
-          root_file: main.bcf
+          root_file: main.aux
           compiler: bibtex
+          args:
       - name: Run pdflatex on master
         uses: dante-ev/latex-action@latest
         with:
